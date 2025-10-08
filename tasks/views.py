@@ -9,8 +9,8 @@ from rest_framework.response import Response
 #List Task
 
 def task_list(request):
-    tasks = Task.objects.all().order_by('-created_at')
-    return render(request, 'tasks/task_list.html',{'task': tasks})
+    tasks = Task.objects.all()
+    return render(request, 'tasks/task_list.html',{'tasks': tasks})
 
 #Add Task
 
@@ -39,10 +39,12 @@ def edit_task(request, pk):
 
 def delete_task(request, pk):
     task = get_object_or_404(Task, pk=pk)
+    
     if request.method == 'POST':
         task.delete()
         return redirect('task_list')
-    return render(request, 'task/task_confirm_delete.html',{'task':task})
+    
+    return render(request, 'tasks/task_confirm_delete.html',{'task':task})
 
 #API View
 
